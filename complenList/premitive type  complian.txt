@@ -1,0 +1,149 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace complenList
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+       
+
+        Queue<string> _complains = new Queue<string>();
+        Queue<string> _names = new Queue<string>();
+        Queue<string> _addresses = new Queue<string>();
+        Queue<string>  _phoneNumbers= new Queue<string>();
+        Queue<int> _results=new Queue<int>(); 
+        string name = "";
+        string complain = "";
+        string address="";
+        string phone = "";
+        int sl = 0;
+        private int result = 0;
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            addComplainButton.Focus();
+        }
+        private void addComplainButton_Click(object sender, EventArgs e)
+        {    
+            _complains.Enqueue( textBoxForInputComplain.Text);
+            _names.Enqueue( textBoxForInputName.Text);
+            _addresses.Enqueue(textBoxForInputAddress.Text);
+            _phoneNumbers.Enqueue(textBoxForPhone.Text);
+            
+
+            _results.Enqueue(++sl);
+           // listBoxForComplinMakeQueue.Items.Clear();
+            foreach (int _result in _results)
+            {
+                this.result = _result;
+            }
+           foreach(string _complain in _complains){
+               complain = _complain;
+                // listBoxForComplinMakeQueue.Items.Add(_complain);  
+            }          
+           foreach (string _name in _names){
+               name = _name;
+               //listBoxForComplinMakeQueue.Items.Add(_name);
+             }
+           foreach (string _address in _addresses)
+           {
+               address = _address;
+               //listBoxForComplinMakeQueue.Items.Add(_address);
+           }
+         
+           foreach (string _phone in _phoneNumbers)
+           {
+
+               phone = _phone;
+               //listBoxForComplinMakeQueue.Items.Add(_address);
+           }
+          
+          
+        //   listBoxForComplinMakeQueue.Items.Add("Complain: "+complain+"\t Name:"+name+"\t Address:"+address ); 
+            ListViewItem item = new ListViewItem(result.ToString());
+           item.SubItems.Add(complain);
+           item.SubItems.Add(name);
+           item.SubItems.Add(address);
+           item.SubItems.Add(phone);
+
+           listView1.Items.Add(item);
+
+           textBoxForInputComplain.Text = "";
+           textBoxForInputName.Text = "";
+           textBoxForInputAddress.Text = "";
+           textBoxForPhone.Text = "";
+
+        }
+
+        private void reMoveComplainButton_Click(object sender, EventArgs e)
+        {
+           listView1.Items.Clear();
+          
+            textBoxForOutputComplain.Text = _complains.Dequeue();
+            textBoxForOutputName.Text= _names.Dequeue();
+            textBoxForOutputAddress.Text = _addresses.Dequeue();
+            _phoneNumbers.Dequeue();
+            textBoxForOutputSerialNumber.Text = _results.Dequeue().ToString();
+
+            ListViewItem item = new ListViewItem();
+            foreach (int _result in _results)
+            {
+               item.Text= _result.ToString();
+            }
+           
+
+            foreach (string _complain in _complains)
+            {
+                
+                item.SubItems.Add(_complain);
+               // complain = _complain;
+                // listBoxForComplinMakeQueue.Items.Add(_complain);  
+            }
+            foreach (string _name in _names)
+            {
+                item.SubItems.Add(_name);
+                //listBoxForComplinMakeQueue.Items.Add(_name);
+            }
+            foreach (string _address in _addresses)
+            {
+                item.SubItems.Add(_address);
+                //listBoxForComplinMakeQueue.Items.Add(_address);
+            }
+          
+            foreach (string _phone in _phoneNumbers)
+            {
+                item.SubItems.Add(_phone);
+                //listBoxForComplinMakeQueue.Items.Add(_address);
+            }
+            listView1.Items.Add(item);
+
+            //textBoxForOutputComplain.Text = "";
+            //textBoxForOutputName.Text= "";
+            //textBoxForOutputAddress.Text = ""; 
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                System.Diagnostics.Process.Start("http://www.google.com");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("please check your internet connection");
+            }
+        }
+
+    }
+}
